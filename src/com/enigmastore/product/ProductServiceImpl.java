@@ -3,10 +3,7 @@ package com.enigmastore.product;
 import com.enigmastore.helper.Helper;
 import com.enigmastore.service.ProductService;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 public class ProductServiceImpl implements ProductService {
@@ -15,29 +12,25 @@ public class ProductServiceImpl implements ProductService {
     Integer productIndex=0;
     @Override
     public void createProduct(Product product) {
-        if (products.size()<productIndex){
-            System.out.println("Tidak ada tempat untuk memasukkan produk");
-            return;
-        }
         products.add(product);
-        productIndex++;
+//        productIndex++;
         System.out.println("Sukses memasukkan produk");
     }
 
     @Override
     public void viewProduct() {
-        productIndex=0;
+        productIndex=1;
+        Date date = new Date();
         if (products.size()==0){
             System.out.println("Tidak ada produk yang ditampilkan");
             return;
         }
-
+        System.out.println("-".repeat(100));
+        System.out.println("|"+" ".repeat(5)+"No"+" ".repeat(5)+"|"+" ".repeat(5)+"Product"+" ".repeat(5)+"|"+" ".repeat(5)+"Brand"+" ".repeat(5)+"|"+" ".repeat(5)+"Price"+" ".repeat(5)+"|"+" ".repeat(5)+ "Tanggal Pembelian "+" ".repeat(5)+"|");
+        System.out.println("-".repeat(100));
         for (Product product : products) {
-            System.out.println((productIndex+1)+". Daftar List Product");
-            System.out.println("Nama produk: "+ product.getNameProduct());
-            System.out.println("Brand produk: "+product.getBrand());
-            System.out.println("Harga produk: "+product.getPrice());
-            productIndex++;
+            System.out.println("|"+" ".repeat(5)+(productIndex++)+" ".repeat(5)+"|"+" ".repeat(5)+product.getNameProduct()+" ".repeat(5)+"|"+" ".repeat(5)+product.getBrand()+" ".repeat(5)+"|"+" ".repeat(5)+product.getPrice()+" ".repeat(5)+"|"+" ".repeat(5)+ date +" ".repeat(5)+"|");
+            System.out.println("-".repeat(100));
         }
 
     }
