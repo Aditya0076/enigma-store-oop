@@ -1,5 +1,6 @@
 package com.enigmastore.product;
 
+import com.enigmastore.checker.Checker;
 import com.enigmastore.helper.Helper;
 import com.enigmastore.service.ProductService;
 
@@ -47,28 +48,32 @@ public class ProductServiceImpl implements ProductService {
             if (Objects.equals(productIndex+1, productId)){
                 do {
                     nameProduct=Helper.updateString("Nama produk (min 3 karakter, maks 50 karakter)");
-                    if (nameProduct.length()<3||nameProduct.length()>50){
-                        System.out.println("Minimal 3 Karakter, dan maksimal 50 karakter.");
+                    try {
+                        Checker.checkNameProduct(nameProduct);
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
                     }
+                }while (nameProduct.length()<3 || nameProduct.length()>50);
+                do {
                     brand=Helper.updateString("Brand (min 3 karakter, maks 30 karakter)");
-                    if (brand.length()<3||brand.length()>30){
-                        System.out.println("Minimal 3 karakter, dan maksimal 30 karakter.");
+                    try {
+                        Checker.checkBrand(brand);
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
                     }
+                }while (brand.length()<3 || brand.length()>30);
+                do {
                     price=Helper.updateInteger("Harga (harus angka positif)");
-                    if (price<0){
-                        System.out.println("Harga harus angka positif.");
+                    try {
+                        Checker.checkPrice(price);
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
                     }
-                    String stringPrice=price.toString();
-                    if (nameProduct.isEmpty()||nameProduct.isBlank()||brand.isEmpty()||brand.isBlank()||stringPrice.isEmpty()||stringPrice.isBlank()){
-                        System.out.println("Produk gagal diperbarui");
-                        return ;
-                    }else {
-                        product1.setNameProduct(nameProduct);
-                        product1.setBrand(brand);
-                        product1.setPrice(price);
-                    }
-                }while (nameProduct.length()<3 || nameProduct.length()>50 || brand.length()<3 || brand.length()>30 || price<0);
+                }while (price<0);
 
+                product1.setNameProduct(nameProduct);
+                product1.setBrand(brand);
+                product1.setPrice(price);
                 System.out.println("Produk berhasil diperbarui");
                 return;
             }
